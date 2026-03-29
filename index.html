@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>广东仲元中学 · 2026届高三二轮复习跨学科视频学习中心</title>
+  <style>
+    :root {
+      --primary: #1a56a4;
+      --primary-light: #2d6dc8;
+      --primary-dark: #133d7a;
+      --accent: #e8701a;
+      --bg: #0f1923;
+      --bg-panel: #162032;
+      --bg-card: #1e2d42;
+      --bg-hover: #253650;
+      --text: #e8edf5;
+      --text-muted: #8fa3bf;
+      --text-dim: #5a7090;
+      --border: #2a3f5a;
+      --gold: #c8a03c;
+      --radius: 10px;
+      --sidebar-w: 360px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ===== TOP BAR ===== */
+    .topbar {
+      background: linear-gradient(135deg, #0d1f3a 0%, #1a2d4a 60%, #0f2238 100%);
+      border-bottom: 2px solid rgba(200,160,60,0.4);
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+      z-index: 100;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+    }
+    .school-logo-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f5e9c4;
+      letter-spacing: 3px;
+      font-family: "STSong", "SimSun", serif;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      padding-right: 16px;
+      margin-right: 4px;
+      white-space: nowrap;
+    }
+    .topbar-title {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+    .topbar-title-main {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .topbar-title-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+    .topbar-stats {
+      display: flex;
+      gap: 16px;
+      flex-shrink: 0;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .sidebar-search {
+      padding: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 140px;
+    }
+    .search-input-wrap input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 7px 10px 7px 32px;
+      color: var(--text);
+      font-size: 13px;
+      outline: none;
+    }
+    .search-input-wrap input:focus { border-color: var(--primary-light); }
+    .search-icon {
+      position: absolute;
+      left: 10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+    .filter-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .filter-tag {
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .filter-tag:hover { border-color: var(--primary-light); color: #fff; }
+    .filter-tag.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .sidebar-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+    .sidebar-list::-webkit-scrollbar { width: 4px; }
+    .sidebar-list::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Batch group */
+    .batch-header {
+      padding: 10px 14px 6px;
+      margin-top: 4px;
+    }
+    .batch-header-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .batch-icon { font-size: 16px; }
+    .batch-title-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold);
+      flex: 1;
+    }
+    .batch-meta {
+      font-size: 10px;
+      color: var(--text-dim);
+    }
+
+    /* Video item */
+    .video-item {
+      padding: 9px 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.12s;
+      border-left: 3px solid transparent;
+    }
+    .video-item:hover { background: var(--bg-hover); }
+    .video-item.active {
+      background: rgba(26,86,164,0.25);
+      border-left-color: var(--accent);
+    }
+    .video-item.hidden { display: none; }
+    .item-num {
+      font-size: 11px;
+      color: var(--text-dim);
+      width: 22px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+    .item-subject-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .item-info { flex: 1; min-width: 0; }
+    .item-title {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.3;
+    }
+    .video-item.active .item-title { color: #fff; font-weight: 600; }
+    .item-meta {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+    .item-status {
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .item-no-video {
+      font-size: 10px;
+      color: #ff6b6b;
+      background: rgba(255,107,107,0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ===== CONTENT AREA ===== */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    /* Player area */
+    .player-wrap {
+      position: relative;
+      background: #000;
+      flex-shrink: 0;
+    }
+    .player-wrap iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      border: none;
+    }
+    /* Placeholder when no video selected */
+    .player-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0d1f3a 0%, #162032 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .player-placeholder.hidden { display: none; }
+    .placeholder-icon { font-size: 64px; opacity: 0.3; }
+    .placeholder-text { color: var(--text-muted); font-size: 16px; }
+    .placeholder-hint { color: var(--text-dim); font-size: 13px; }
+
+    /* Pending placeholder */
+    .player-pending {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+    .player-pending.hidden { display: none; }
+    .pending-icon { font-size: 56px; }
+    .pending-title { color: #fff; font-size: 17px; font-weight: 600; }
+    .pending-desc { color: var(--text-muted); font-size: 13px; text-align: center; max-width: 400px; line-height: 1.6; }
+
+    /* B站直达浮层 */
+    .bili-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 10px 16px;
+      background: linear-gradient(to top, rgba(10,16,28,0.96) 0%, rgba(10,16,28,0.7) 80%, transparent 100%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 20;
+      pointer-events: auto;
+    }
+    .bili-overlay.hidden { display: none; }
+    .bili-direct-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #00a1d6;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 9px 20px;
+      border-radius: 24px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 2px 12px rgba(0,161,214,0.45);
+    }
+    .bili-direct-btn:hover { background: #00b5e8; transform: scale(1.04); }
+    .bili-direct-icon { font-size: 18px; }
+    .bili-overlay-hint {
+      color: rgba(200,215,240,0.75);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    /* 去B站观看按钮（信息栏内） */
+    .bili-watch-btn {
+      background: #00a1d6 !important;
+      color: #fff !important;
+      font-weight: 700 !important;
+      border: none !important;
+      text-decoration: none;
+    }
+    .bili-watch-btn:hover { background: #009bc8 !important; color: #fff !important; }
+    .bili-watch-btn.hidden { display: none !important; }
+
+    /* Video info bar */
+    .video-infobar {
+      padding: 10px 20px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    .video-infobar.hidden { display: none; }
+    .video-subject-badge {
+      padding: 3px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .video-infobar-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .infobar-btns {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .infobar-btn {
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .infobar-btn:hover { border-color: var(--primary-light); color: #fff; background: rgba(26,86,164,0.2); }
+    .infobar-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .prev-next-btns {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .nav-btn {
+      padding: 5px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { border-color: var(--primary-light); color: #fff; }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* Guide panel */
+    .guide-panel {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px;
+      display: none;
+    }
+    .guide-panel.visible { display: block; }
+    .guide-panel::-webkit-scrollbar { width: 5px; }
+    .guide-panel::-webkit-scrollbar-track { background: transparent; }
+    .guide-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    .guide-section { margin-bottom: 18px; }
+    .guide-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .guide-section-title::before {
+      content: '';
+      display: inline-block;
+      width: 3px; height: 14px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+    .prethink-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .prethink-list li {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      display: flex;
+      gap: 8px;
+    }
+    .prethink-list li::before {
+      content: 'Q';
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .points-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+    }
+    .point-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .point-card-sub {
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+    .point-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .point-items li {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding-left: 10px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .point-items li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .gaokao-hint {
+      background: rgba(26,86,164,0.15);
+      border: 1px solid rgba(26,86,164,0.4);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Welcome screen */
+    .welcome-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .welcome-panel.hidden { display: none; }
+    .welcome-logo { font-size: 56px; }
+    .welcome-title { font-size: 22px; font-weight: 700; color: #fff; text-align: center; }
+    .welcome-sub { font-size: 14px; color: var(--text-muted); text-align: center; line-height: 1.7; max-width: 500px; }
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 540px;
+      margin-top: 8px;
+    }
+    .welcome-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .welcome-card-icon { font-size: 24px; margin-bottom: 6px; }
+    .welcome-card-label { font-size: 12px; color: var(--text-muted); }
+    .welcome-card-val { font-size: 18px; font-weight: 700; color: var(--gold); }
+
+    /* SUBJECT COLORS */
+    .subj-化学  { background: #1a6b4a; }
+    .subj-物理  { background: #1a4a8a; }
+    .subj-生物  { background: #4a7a1a; }
+    .subj-地理  { background: #7a5a1a; }
+    .subj-数学  { background: #6a1a8a; }
+    .subj-历史  { background: #8a3a1a; }
+    .subj-政治  { background: #8a1a1a; }
+    .subj-语文  { background: #1a6a8a; }
+    .subj-英语  { background: #1a5a6a; }
+
+    .dot-化学  { background: #2db880; }
+    .dot-物理  { background: #4a9eff; }
+    .dot-生物  { background: #7ec950; }
+    .dot-地理  { background: #f0a830; }
+    .dot-数学  { background: #b06cf0; }
+    .dot-历史  { background: #f07040; }
+    .dot-政治  { background: #f05050; }
+    .dot-语文  { background: #50c0e0; }
+    .dot-英语  { background: #30b0c0; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      :root { --sidebar-w: 100%; }
+      body { overflow: auto; height: auto; }
+      .main { flex-direction: column; }
+      .sidebar { width: 100%; max-height: 40vh; }
+      .content { min-height: 60vh; }
+      .topbar { height: auto; padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
+      .school-logo-text { font-size: 16px; }
+      .topbar-stats { gap: 10px; }
+      .stat-num { font-size: 15px; }
+      .welcome-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="school-logo-text">仲元中学</div>
+  <div class="topbar-title">
+    <div class="topbar-title-main">2026届高三二轮复习 · 跨学科项目式视频学习中心</div>
+    <div class="topbar-title-sub">广东仲元中学 · 覆盖9大学科 · 紧扣高考考点</div>
+  </div>
+  <div class="topbar-stats">
+    <div class="stat-item"><div class="stat-num">52</div><div class="stat-label">专题视频</div></div>
+    <div class="stat-item"><div class="stat-num">9</div><div class="stat-label">学科</div></div>
+    <div class="stat-item"><div class="stat-num">7</div><div class="stat-label">探究批次</div></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-search">
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="搜索视频标题或学科…" oninput="doFilter()">
+      </div>
+    </div>
+    <div class="filter-tags" id="filterTags">
+      <button class="filter-tag active" data-subj="全部" onclick="setFilter('全部',this)">全部</button>
+      <button class="filter-tag" data-subj="化学" onclick="setFilter('化学',this)">化学</button>
+      <button class="filter-tag" data-subj="物理" onclick="setFilter('物理',this)">物理</button>
+      <button class="filter-tag" data-subj="生物" onclick="setFilter('生物',this)">生物</button>
+      <button class="filter-tag" data-subj="地理" onclick="setFilter('地理',this)">地理</button>
+      <button class="filter-tag" data-subj="数学" onclick="setFilter('数学',this)">数学</button>
+      <button class="filter-tag" data-subj="历史" onclick="setFilter('历史',this)">历史</button>
+      <button class="filter-tag" data-subj="政治" onclick="setFilter('政治',this)">政治</button>
+      <button class="filter-tag" data-subj="语文" onclick="setFilter('语文',this)">语文</button>
+      <button class="filter-tag" data-subj="英语" onclick="setFilter('英语',this)">英语</button>
+    </div>
+    <div class="sidebar-list" id="sidebarList"></div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- Player area -->
+    <div class="player-wrap" id="playerWrap">
+      <!-- Welcome placeholder (default) -->
+      <div class="player-placeholder" id="playerPlaceholder">
+        <div class="placeholder-icon">🎬</div>
+        <div class="placeholder-text">从左侧选择视频开始学习</div>
+        <div class="placeholder-hint">共 52 个跨学科专题视频 · 涵盖9大学科考点</div>
+      </div>
+      <!-- Pending placeholder (no bilibili link yet) -->
+      <div class="player-pending hidden" id="playerPending">
+        <div class="pending-icon">📺</div>
+        <div class="pending-title" id="pendingTitle">视频准备中</div>
+        <div class="pending-desc" id="pendingDesc">该视频的在线播放链接正在整理中，请稍后再来。<br>你可以继续阅读下方的考点导学内容。</div>
+      </div>
+      <!-- Bilibili iframe -->
+      <iframe id="biliFrame" class="hidden" allowfullscreen allow="autoplay; fullscreen"
+        src="about:blank"></iframe>
+    </div>
+
+    <!-- Video info bar -->
+    <div class="video-infobar hidden" id="videoInfobar">
+      <span class="video-subject-badge" id="infoBadge"></span>
+      <span class="video-infobar-title" id="infoTitle"></span>
+      <div class="infobar-btns">
+        <a id="biliDirectLink" href="#" target="_blank" rel="noopener" class="infobar-btn bili-watch-btn hidden">▶ 去B站观看</a>
+        <button class="infobar-btn" id="btnWatched" onclick="toggleWatched()">✓ 标记已看</button>
+        <button class="infobar-btn" id="btnGuide" onclick="toggleGuide()">📖 考点导学</button>
+      </div>
+      <div class="prev-next-btns">
+        <button class="nav-btn" id="btnPrev" onclick="prevVideo()">◀ 上一个</button>
+        <button class="nav-btn" id="btnNext" onclick="nextVideo()">下一个 ▶</button>
+      </div>
+    </div>
+
+    <!-- Welcome / guide panel -->
+    <div class="welcome-panel" id="welcomePanel">
+      <div class="welcome-logo">📚</div>
+      <div class="welcome-title">广东仲元中学 · 2026届高三二轮复习<br>跨学科项目式视频学习中心</div>
+      <div class="welcome-sub">
+        本平台收录52个精选跨学科专题视频，覆盖化学、物理、生物、地理、数学、历史、政治、语文、英语9大学科，
+        紧扣2026年高考考点，帮助同学们在真实情境中构建跨学科知识体系。
+      </div>
+      <div class="welcome-grid">
+        <div class="welcome-card"><div class="welcome-card-icon">🧪</div><div class="welcome-card-val">8</div><div class="welcome-card-label">化学专题</div></div>
+        <div class="welcome-card"><div class="welcome-card-icon">⚡</div><div class="welcome-card-val">7</div><div class="welcome-card-label">物理专题</div></div>
+        <div class="welcome-card"><div class="welcome-card-icon">🧬</div><div class="welcome-card-val">6</div><div class="welcome-card-label">生物专题</div></div>
+        <div class="welcome-card"><div class="welcome-card-icon">🌍</div><div class="welcome-card-val">6</div><div class="welcome-card-label">地理专题</div></div>
+        <div class="welcome-card"><div class="welcome-card-icon">📐</div><div class="welcome-card-val">11</div><div class="welcome-card-label">数学专题</div></div>
+        <div class="welcome-card"><div class="welcome-card-icon">📜</div><div class="welcome-card-label">历史·政治<br>语文·英语</div><div class="welcome-card-val">14</div></div>
+      </div>
+    </div>
+
+    <div class="guide-panel" id="guidePanel"></div>
+
+  </div>
+</div>
+
+<script>
+// =============================================
+// 视频数据
+// bvid: B站视频的BV号，格式如 "BVxxxxxxxxxx"
+// 留空或 null 表示链接尚未填入
+// =============================================
+const BATCHES = [
+  {
+    icon: '⚗️', title: '第一批：科技革命与未来能源', theme: '科技前沿如何改变世界？',
+    videos: [
+      { id: 1, subject: '化学', title: '2025诺贝尔化学奖：MOFs多孔材料的科学革命', duration: '8min',
+        bvid: 'BV1irQ6BMEKk',
+        prethink: ['MOFs材料的全称是什么？它的基本结构特点是什么？','为什么多孔材料在储气、催化领域具有革命性意义？','2025年诺贝尔化学奖得主解决了什么核心科学问题？','MOFs材料的合成涉及哪些化学键和配位化学原理？','从资源利用角度，MOFs材料如何助力碳中和目标的实现？'],
+        points: [
+          { sub: '化学', items: ['配位化合物的结构与成键（配位键）','多孔材料的比表面积与吸附原理','CO₂捕集的化学原理与碳中和','金属有机骨架材料的合成路线','催化剂的活性位点概念'] },
+          { sub: '物理', items: ['气体分子的扩散与碰撞理论','纳米材料的量子效应'] },
+          { sub: '数学', items: ['比表面积与孔径的关系计算'] },
+          { sub: '政治', items: ['科技创新与国家发展战略','诺贝尔奖背后的国际科技竞争'] }
+        ],
+        gaokao: '参见2024年全国甲卷·化学第7题（配位化合物）；2023年新课标Ⅰ卷·化学第13题'
+      },
+      { id: 2, subject: '化学', title: '中国稀土：从资源大国到技术强国', duration: '9min',
+        bvid: 'BV1sWQ6BSEFx',
+        prethink: ['中国稀土资源在全球的储量和开采量大约占多少比例？','稀土元素在元素周期表中位于哪个区域？有何特殊性质？','稀土在新能源汽车、风力发电中具体起什么作用？','中国如何从稀土开采大国转型为稀土技术强国？','过度开采稀土会带来哪些生态和环境问题？'],
+        points: [
+          { sub: '化学', items: ['镧系元素的电子构型与稀土特性','稀土冶炼中的湿法提取工艺','永磁材料中钕铁硼的化学组成','稀土催化剂在汽车尾气处理中的应用','萃取分离原理'] },
+          { sub: '地理', items: ['中国稀土主产区分布（内蒙古、赣南等）','矿产资源的不可再生性与可持续利用'] },
+          { sub: '政治', items: ['资源安全与国家主权','战略资源的国家管控政策'] },
+          { sub: '历史', items: ['近代中国资源被掠夺的历史教训'] }
+        ],
+        gaokao: '参见2023年全国乙卷·化学第10题（元素周期律）；2022年广东卷·地理第18题'
+      },
+      { id: 3, subject: '化学', title: '锂离子固态电池：下一代能源存储技术', duration: '8min',
+        bvid: 'BV1LrQ6BMEdZ',
+        prethink: ['现有液态锂离子电池的主要安全隐患是什么？','固态电解质相比液态电解质有哪些优缺点？','锂离子在充放电过程中的迁移原理是什么？','固态电池的能量密度比液态电池提升的原理是什么？','固态电池的大规模量产面临哪些材料和工艺挑战？'],
+        points: [
+          { sub: '化学', items: ['氧化还原反应：锂的氧化和还原过程','原电池与电解池的工作原理','电解质的离子导电机理','锂的化学性质','固态电解质材料的结构'] },
+          { sub: '物理', items: ['电场力做功与电势差','电池的内阻与欧姆定律','电能与化学能的相互转化'] },
+          { sub: '政治', items: ['新能源产业发展与能源安全','科技自立自强'] }
+        ],
+        gaokao: '参见2024年新课标Ⅰ卷·化学第13题（电化学）；2023年全国甲卷·化学第11题'
+      },
+      { id: 4, subject: '化学', title: 'AI助力化学研发：机器化学家的诞生', duration: '8min',
+        bvid: 'BV1jrQ6BME3H',
+        prethink: ['传统药物研发需要多少年？AI介入后能将周期缩短到多少？','机器学习如何预测分子的化学性质？','AI在合成路线设计中如何克服人类的局限性？','AlphaFold解决了什么重大生物化学难题？','AI化学家的出现会取代科学家还是增强科学家的能力？'],
+        points: [
+          { sub: '化学', items: ['有机合成路线的逆向分析','分子构型与化学活性的关系','催化反应的选择性优化','高通量筛选与组合化学'] },
+          { sub: '数学', items: ['机器学习中的函数拟合与优化','概率统计：分子性质预测'] },
+          { sub: '政治', items: ['新质生产力：AI赋能传统产业','科技伦理'] }
+        ],
+        gaokao: '参见2024年新课标Ⅱ卷·语文第5题（科技文阅读）；2023年广东卷·化学（有机合成）'
+      },
+      { id: 5, subject: '物理', title: '可控核聚变：人造太阳与终极能源', duration: '8min',
+        bvid: 'BV1LrQ6BMEet',
+        prethink: ['核聚变和核裂变有什么本质区别？各自的反应条件是什么？','托卡马克装置（ITER）如何用磁场约束等离子体？','实现可控核聚变的三大条件（劳森判据）是什么？','中国东方超环（EAST）在全球核聚变研究中处于什么地位？','如果核聚变商业化成功，会对全球能源格局产生什么影响？'],
+        points: [
+          { sub: '物理', items: ['核反应方程的书写与质量数守恒','质能方程E=mc²的应用','比结合能与核的稳定性','带电粒子在磁场中的运动','核聚变反应：氘-氚反应方程'] },
+          { sub: '化学', items: ['氢的同位素：氘(D)和氚(T)'] },
+          { sub: '政治', items: ['能源安全与大国博弈','国际科技合作（ITER国际项目）'] }
+        ],
+        gaokao: '参见2024年全国甲卷·物理第16题（核反应）；2022年新课标Ⅱ卷·物理第14题'
+      },
+      { id: 6, subject: '物理', title: '变压器原理：电能输送的幕后英雄', duration: '6min',
+        bvid: 'BV1izQ6BzEem',
+        prethink: ['变压器的升压和降压各应用在输电过程的哪个环节？','变压器的工作原理涉及哪个物理定律？','为什么高压输电能减少电能损耗？请用公式推导。','理想变压器和实际变压器有哪些区别？','中国特高压输电技术为什么处于世界领先地位？'],
+        points: [
+          { sub: '物理', items: ['电磁感应定律：法拉第定律','变压器的匝数比与电压比、电流比','输电线路的电能损耗：P=I²R','交变电流的有效值与峰值','理想变压器的功率守恒'] },
+          { sub: '地理', items: ['西电东送三条通道的地理走向','能源资源的地区分布不均衡'] },
+          { sub: '政治', items: ['西电东送工程与区域协调发展'] }
+        ],
+        gaokao: '参见2024年新课标Ⅰ卷·物理第19题（变压器）；2023年全国乙卷·物理第20题'
+      },
+      { id: 7, subject: '物理', title: '光纤原理：信息时代的高速公路', duration: '5min',
+        bvid: 'BV1ozQ6BzESV',
+        prethink: ['光在光纤中传播利用的是什么物理现象？发生条件是什么？','光纤通信相比铜线通信有哪些明显优势？','什么叫临界角？如何计算不同介质中的临界角？','单模光纤和多模光纤有什么区别？','海底光缆是如何铺设的？它对全球互联网有多重要？'],
+        points: [
+          { sub: '物理', items: ['光的全反射原理：折射定律与临界角','光的折射率的定义与计算','光在不同介质中的传播速度','电磁波谱：光通信使用近红外波段'] },
+          { sub: '地理', items: ['海底光缆的全球分布与信息地缘政治'] },
+          { sub: '政治', items: ['数字中国建设战略','信息主权与网络安全'] }
+        ],
+        gaokao: '参见2023年新课标Ⅱ卷·物理第15题（全反射）；2022年全国甲卷·物理第13题'
+      },
+      { id: 8, subject: '政治', title: '新质生产力：高质量发展的新引擎', duration: '3min',
+        bvid: 'BV1ozQ6BzENz',
+        prethink: ['新质生产力的定义是什么？它与传统生产力有何本质区别？','新质生产力的三个核心要素如何升级？','哪些行业最能代表新质生产力的发展？','发展新质生产力对高质量发展有什么重要意义？','普通人如何在新质生产力时代找到自身定位？'],
+        points: [
+          { sub: '政治', items: ['新质生产力的科学内涵与特征','生产力与生产关系的辩证统一','高质量发展的内在要求','全要素生产率的提升路径','数字经济与实体经济融合发展'] },
+          { sub: '历史', items: ['工业革命对生产力发展的历史影响'] },
+          { sub: '语文', items: ['时政热词的准确把握与表达'] }
+        ],
+        gaokao: '参见2024年新课标Ⅱ卷·政治第1题（新质生产力）；2024年广东卷·政治主观题'
+      },
+    ]
+  },
+  {
+    icon: '🌍', title: '第二批：地球系统与资源环境', theme: '人类活动如何影响地球系统？如何实现可持续发展？',
+    videos: [
+      { id: 9, subject: '地理', title: '喀斯特地貌：大自然的鬼斧神工', duration: '10min',
+        bvid: 'BV1jzQ6BzEnW',
+        prethink: ['喀斯特地貌形成的基本条件有哪些？','溶洞内的钟乳石和石笋是如何形成的？涉及哪些化学反应？','中国喀斯特地貌主要分布在哪些省份？','喀斯特地区的水资源利用面临哪些特殊挑战？','贵州、广西的石漠化问题如何治理？'],
+        points: [
+          { sub: '地理', items: ['可溶性岩石的分布规律','喀斯特地貌的地上/地下形态','地表水与地下水的转化','石漠化的成因与生态修复措施','云贵高原的地形特征'] },
+          { sub: '化学', items: ['CaCO₃+CO₂+H₂O→Ca(HCO₃)₂','碳酸氢钙的分解反应','化学平衡移动分析'] },
+          { sub: '生物', items: ['喀斯特地区的特殊生态系统'] },
+          { sub: '历史', items: ['徐霞客游记中的喀斯特地理考察'] }
+        ],
+        gaokao: '参见2024年新课标Ⅱ卷·地理第8题（地貌类型）；2023年全国乙卷·地理第11题'
+      },
+      { id: 10, subject: '地理', title: '云顶深渊：长白山天池的地质密码', duration: '15min',
+        bvid: 'BV1jzQ6BzE9m',
+        prethink: ['长白山天池是如何形成的？是火口湖还是构造湖？','火山喷发会对局部和全球气候产生哪些影响？','长白山地区的垂直地带性植被分布有哪些特点？','天池的水从哪里来？向哪里流出？','长白山区域在历史上的战略地位是什么？'],
+        points: [
+          { sub: '地理', items: ['火山地貌的形成机制','山地垂直自然带的分布规律','火山湖（天池）的水文特征','松花江、图们江、鸭绿江的发源地'] },
+          { sub: '生物', items: ['垂直地带性下的植被和动物分布','极端环境中的生物适应策略'] },
+          { sub: '历史', items: ['清朝发祥地：满族文化与长白山'] }
+        ],
+        gaokao: '参见2024年全国甲卷·地理第8题（山地自然带）；2022年新课标Ⅱ卷·地理'
+      },
+      { id: 11, subject: '地理', title: '霍尔木兹海峡：全球能源咽喉的地质宿命', duration: '12min',
+        bvid: 'BV11nQ6BQEzq',
+        prethink: ['霍尔木兹海峡的地理位置是什么？连接哪两个水域？','全球每天有多少原油通过霍尔木兹海峡运输？','为什么波斯湾地区石油储量如此丰富？地质原因是什么？','如果霍尔木兹海峡被封锁，中国的能源安全会受到什么影响？','中国如何通过能源多元化降低对此通道的依赖？'],
+        points: [
+          { sub: '地理', items: ['波斯湾的地理位置与地形特征','全球主要石油运输通道','中东地区石油资源形成的地质条件','能源安全与中国能源进口多元化战略'] },
+          { sub: '政治', items: ['能源地缘政治学','国家主权与战略要道的管控'] },
+          { sub: '历史', items: ['近代列强在中东的石油争夺史'] },
+          { sub: '化学', items: ['石油的分馏与裂化'] }
+        ],
+        gaokao: '参见2024年新课标Ⅰ卷·地理第7题（海峡与能源）；2023年广东卷·政治'
+      },
+      { id: 12, subject: '地理', title: '江西矿产资源：战略资源的"矿产大省"', duration: '12min',
+        bvid: 'BV11nQ6BQEWj',
+        prethink: ['江西有哪些战略矿产资源？铜、钨、稀土各分布在哪里？','江西的矿产如何影响中国制造业竞争力？','矿产资源大量开采后，江西面临哪些环境问题？','资源型城市（如景德镇、萍乡）如何实现产业转型？','江西矿产资源对新能源产业链有什么战略支撑作用？'],
+        points: [
+          { sub: '地理', items: ['江西主要矿产：铜（德兴）、钨（大余）、稀土（赣南）','华南丘陵的地质构造与成矿规律','资源型城市的转型路径'] },
+          { sub: '化学', items: ['铜的冶炼：火法冶金与湿法冶金','钨的性质与在工具钢中的应用','矿山酸性废水的化学处理'] },
+          { sub: '政治', items: ['绿色发展理念与生态文明建设','新能源产业链的自主可控'] },
+          { sub: '历史', items: ['红色历史：井冈山精神与革命老区振兴'] }
+        ],
+        gaokao: '参见2023年广东卷·地理第18题（矿产与工业）；2024年新课标Ⅰ卷·化学第9题'
+      },
+      { id: 13, subject: '地理', title: '超级港口：宁波舟山港的世界第一之路', duration: '15min',
+        bvid: 'BV1jzQ6BzEMX',
+        prethink: ['宁波舟山港为什么能成为世界货物吞吐量第一大港？','港口发展需要哪些自然条件？','宁波舟山港与上海港的分工协作是什么模式？','中美贸易摩擦对宁波舟山港的货运量有什么影响？','长三角港口群如何服务中国的对外开放战略？'],
+        points: [
+          { sub: '地理', items: ['港口区位的自然条件：水深、避风、腹地','长三角城市群的港口体系','集装箱运输对全球贸易的革命性影响'] },
+          { sub: '物理', items: ['浮力原理：大型货轮的吃水深度计算'] },
+          { sub: '政治', items: ['共建一带一路与港口互联互通','对外开放新格局：自贸区与自贸港'] },
+          { sub: '历史', items: ['宁波在古代海上丝绸之路中的地位'] }
+        ],
+        gaokao: '参见2024年全国甲卷·地理第9题（港口区位）；2022年新课标Ⅰ卷·地理'
+      },
+      { id: 14, subject: '生物', title: '沙漠化治理与海洋牧场：生态修复的中国方案', duration: '18min',
+        bvid: 'BV17zQ6B6EnN',
+        prethink: ['土地沙漠化的主要原因有哪些？','三北防护林工程的生态意义是什么？','海洋牧场是什么？它如何实现放牧海洋生物？','生态修复中如何平衡经济发展和生态保护？','中国的荒漠化治理经验为全球提供了什么中国方案？'],
+        points: [
+          { sub: '生物', items: ['生态系统的结构与功能','群落演替：从裸地到植被的恢复','海洋牧场的生态位理论','生物多样性的保护策略'] },
+          { sub: '地理', items: ['中国荒漠化的地区分布','三北防护林的地理走向','西北干旱气候成因'] },
+          { sub: '政治', items: ['生态文明建设：绿水青山就是金山银山','碳汇与双碳目标的关系'] }
+        ],
+        gaokao: '参见2024年新课标Ⅱ卷·生物第5题（生态系统）；2023年广东卷·地理第19题'
+      },
+      { id: 15, subject: '生物', title: '土壤碳封存：应对气候变化的生物方案', duration: '8min',
+        bvid: 'BV1jrQ6BMEAW',
+        prethink: ['土壤是地球上最大的碳库吗？土壤碳封存的基本原理是什么？','农业生产方式（翻耕vs免耕）如何影响土壤碳储量？','微生物在土壤有机碳的分解和积累中扮演什么角色？','土壤碳封存对碳中和目标的贡献有多大？','如何通过农业管理措施提高土壤碳封存能力？'],
+        points: [
+          { sub: '生物', items: ['生态系统的碳循环','微生物的分解作用与碳释放','腐殖质的形成与稳定性','蓝碳（海洋）与绿碳（陆地）的对比'] },
+          { sub: '化学', items: ['CO₂的温室效应原理','土壤有机质的化学转化路径'] },
+          { sub: '地理', items: ['全球碳循环的空间分布','不同气候带土壤碳储量的差异'] },
+          { sub: '政治', items: ['双碳目标（2030碳达峰、2060碳中和）的政策解读'] }
+        ],
+        gaokao: '参见2024年全国甲卷·生物第6题（物质循环）；2023年新课标Ⅱ卷·生物'
+      },
+      { id: 16, subject: '语文', title: '推进乡村全面振兴：从脱贫攻坚到共同富裕', duration: '8min',
+        bvid: 'BV1jrQ6BuEju',
+        prethink: ['中国2021年宣布消除绝对贫困，脱贫攻坚的核心措施有哪些？','乡村振兴与脱贫攻坚有什么联系和区别？','农村产业振兴的主要路径有哪些？','城镇化进程中，如何防止农村人才空心化？','共同富裕的实现需要处理哪些深层次的城乡矛盾？'],
+        points: [
+          { sub: '语文', items: ['政论文的阅读：把握中心论点与分论点','议论文写作：乡村振兴的论据积累','时事素材积累：典型案例与人物'] },
+          { sub: '政治', items: ['乡村振兴战略的五个振兴','农村土地制度改革（三权分置）','工农城乡关系的辩证理解'] },
+          { sub: '地理', items: ['农村劳动力转移对农业生产的影响','特色农业的区位条件分析'] }
+        ],
+        gaokao: '参见2024年全国甲卷·语文现代文阅读（乡村振兴主题）；2023年广东卷·政治'
+      },
+    ]
+  },
+  {
+    icon: '🚀', title: '第三批：航天探索与深空科学', theme: '人类如何突破地球限制探索宇宙？航天技术如何改变生活？',
+    videos: [
+      { id: 17, subject: '化学', title: '中国航天：月壤的硬核用法', duration: '6min',
+        bvid: 'BV1LrQ6BMEhc',
+        prethink: ['中国嫦娥系列任务带回的月壤与地球土壤有哪些根本区别？','月壤中含有哪些特殊元素或矿物？','月壤可以用来制造建筑材料吗？','从月壤中提取氦-3用于核聚变的前景如何？','研究月壤对了解地球-月球系统的起源有什么价值？'],
+        points: [
+          { sub: '化学', items: ['月壤矿物组成：斜长石、辉石、钛铁矿','钛铁矿的化学式：FeTiO₃及其还原提取','氦-3的核性质与聚变方程'] },
+          { sub: '物理', items: ['月球重力加速度（g月=1.6m/s²）','月球表面温度极值与热力学分析'] },
+          { sub: '政治', items: ['航天强国建设：嫦娥工程的战略意义'] }
+        ],
+        gaokao: '参见2023年新课标Ⅱ卷·化学第7题（矿物化学）；2024年全国甲卷·物理（天体运动）'
+      },
+      { id: 18, subject: '物理', title: '卫星变轨问题：从牛顿力学到航天工程', duration: '8min',
+        bvid: 'BV1LrQ6BMErv',
+        prethink: ['卫星从低轨道进入高轨道需要加速还是减速？直觉与答案是否相同？','霍曼转移轨道是什么？为什么它是最节省燃料的变轨方案？','地球同步卫星的轨道高度是如何确定的？','卫星变轨过程中，动能、势能、机械能各如何变化？','中国空间站的轨道维持需要定期补推，原因是什么？'],
+        points: [
+          { sub: '物理', items: ['万有引力定律：F=GMm/r²','圆周运动：向心力提供条件','开普勒三大定律','同步卫星的特征：h约36000km，周期24h','霍曼转移的两次加速分析','宇宙速度：第一宇宙速度7.9km/s'] },
+          { sub: '数学', items: ['幂函数：T²与R³的关系','变轨前后轨道参数的方程组'] },
+          { sub: '政治', items: ['中国空间站建设的战略意义'] }
+        ],
+        gaokao: '参见2024年新课标Ⅰ卷·物理第17题（卫星运动）；2023年全国甲卷·物理第20题'
+      },
+      { id: 19, subject: '语文', title: '2025年科技大事件回顾', duration: '10min',
+        bvid: 'BV1irQ6BMEFo',
+        prethink: ['2025年哪些科技突破最值得关注？','这些科技事件与高考哪些学科有关联？','科技进步如何改变人类生活方式？','中国在这些科技突破中扮演了什么角色？','如何用议论文的方式评价2025年科技发展？'],
+        points: [
+          { sub: '语文', items: ['科技新闻的阅读与理解','议论文素材积累','时事热点的文字表达'] },
+          { sub: '物理', items: ['物理学前沿进展'] },
+          { sub: '化学', items: ['化学领域新发现'] },
+          { sub: '生物', items: ['生命科学前沿突破'] }
+        ],
+        gaokao: '参见2024年高考语文全国卷现代文阅读（科技主题）'
+      },
+      { id: 20, subject: '英语', title: 'CNN10：太空技术·宇航员锻炼新方式', duration: '10min',
+        bvid: 'BV1LrQ6BMEaW',
+        prethink: ['失重环境对人体骨骼和肌肉有什么影响？','宇航员如何在太空中保持身体健康？','太空医学研究对地球上的医疗有何启示？','英语新闻报道的语言特点是什么？','如何从英语听力中快速抓取核心信息？'],
+        points: [
+          { sub: '英语', items: ['英语听力：新闻报道类题型','太空科技词汇积累','英语阅读：快速定位关键信息'] },
+          { sub: '生物', items: ['失重对人体的生理影响','肌肉萎缩的机制'] },
+          { sub: '物理', items: ['失重原理与人造重力方案'] }
+        ],
+        gaokao: '参见2024年全国英语卷听力（科技类材料）'
+      },
+      { id: 21, subject: '英语', title: 'CNN10：深空旅行·冬眠技术会是关键吗', duration: '10min',
+        bvid: 'BV1WWQ6BSEL7',
+        prethink: ['动物冬眠的生物学原理是什么？','人类能否实现类似冬眠的状态？','深空旅行面临哪些生理和心理挑战？','冬眠技术在医学上有哪些应用？','这个议题的英语表达有哪些关键词汇？'],
+        points: [
+          { sub: '英语', items: ['英语听力：科学探索类题型','冬眠技术相关词汇','科技英语的句型结构'] },
+          { sub: '生物', items: ['冬眠生理机制','代谢调节与体温调节'] },
+          { sub: '物理', items: ['宇宙距离与深空旅行的物理挑战'] }
+        ],
+        gaokao: '参见2024年英语全国卷阅读理解（科技主题）'
+      },
+      { id: 22, subject: '历史', title: '2020世界人工智能大会：科技连接世界', duration: '3min',
+        bvid: 'BV1sWQ6BSEce',
+        prethink: ['人工智能技术的发展经历了哪几个重要阶段？','2020年AI大会上展示了哪些前沿技术？','中国在全球AI竞争中处于什么位置？','AI技术对就业市场有什么深远影响？','如何用历史的眼光看待AI革命？'],
+        points: [
+          { sub: '历史', items: ['第三次科技革命与信息技术革命','科技发展对社会经济结构的影响'] },
+          { sub: '政治', items: ['科技竞争与大国博弈','创新驱动发展战略'] },
+          { sub: '数学', items: ['机器学习的数学基础'] }
+        ],
+        gaokao: '参见2023年历史全国卷（第三次科技革命）'
+      },
+      { id: 23, subject: '政治', title: '英语介绍中国发展：一个前所未见的中国', duration: '5min',
+        bvid: 'BV1yWQ6BSE8m',
+        prethink: ['哪些数据最能体现中国改革开放40年的巨变？','如何用英语向外国人介绍中国的发展成就？','中国的发展模式与西方有哪些不同？','讲好中国故事需要掌握哪些技巧？','中国发展经验对发展中国家有何借鉴意义？'],
+        points: [
+          { sub: '政治', items: ['中国发展成就的数据积累','国际传播与话语权建设','讲好中国故事的方法'] },
+          { sub: '英语', items: ['介绍中国的英语表达','中英文化差异'] },
+          { sub: '历史', items: ['改革开放的历史进程与成就'] }
+        ],
+        gaokao: '参见2024年政治全国卷（中国式现代化）；2024年英语（中国文化介绍）'
+      },
+      { id: 24, subject: '政治', title: '2026春节时政汇总：中国发展新成就', duration: '5min',
+        bvid: 'BV1WWQ6BSExt',
+        prethink: ['2026年初中国有哪些重大政策发布？','这些成就体现了哪些国家发展战略？','如何有效记忆时政热点为高考备考？','时政热点与各学科考点如何联系？','2026年的重大时事对未来有哪些影响？'],
+        points: [
+          { sub: '政治', items: ['2026年重大时政热点汇总','党和国家重大决策部署','中国发展的最新数据与成就'] },
+          { sub: '历史', items: ['历史进程中的当代发展'] },
+          { sub: '地理', items: ['区域发展的最新动态'] }
+        ],
+        gaokao: '参见2026年高考政治时政热点'
+      },
+    ]
+  },
+  {
+    icon: '🧬', title: '第四批：生命科学与健康前沿', theme: '生命科学如何改善人类健康？科技如何帮助残障人士？',
+    videos: [
+      { id: 25, subject: '生物', title: '脑机接口：连接大脑与机器的未来', duration: '15min',
+        bvid: 'BV1PWQ6BDEds',
+        prethink: ['脑机接口如何读取神经信号？','脑机接口技术有哪些应用前景？','神经元如何传递信号？','脑机接口面临哪些伦理挑战？','中国在脑机接口领域有哪些研究进展？'],
+        points: [
+          { sub: '生物', items: ['神经元信号传导','突触传递的电化学机制','脑机接口工作原理','神经科学前沿'] },
+          { sub: '物理', items: ['生物电信号的电学特性','信号放大与处理'] },
+          { sub: '化学', items: ['神经递质的化学结构'] },
+          { sub: '政治', items: ['科技伦理与社会规范'] }
+        ],
+        gaokao: '参见2024年生物全国卷（神经调节）；2023年广东卷·生物'
+      },
+      { id: 26, subject: '生物', title: '生物制造：细胞工厂与合成生物学', duration: '8min',
+        bvid: 'BV1WWQ6BSEhK',
+        prethink: ['合成生物学如何设计生命？','细胞工厂能生产哪些产品？','基因编辑技术的核心原理是什么？','生物制造如何推动绿色化工？','合成生物学面临哪些生物安全风险？'],
+        points: [
+          { sub: '生物', items: ['合成生物学原理','代谢工程改造','基因工程的基本流程','生物制造应用'] },
+          { sub: '化学', items: ['生物化学：酶催化反应','发酵工程的化学基础'] },
+          { sub: '政治', items: ['生物安全与国家安全','绿色化工发展战略'] }
+        ],
+        gaokao: '参见2024年生物全国卷（基因工程）'
+      },
+      { id: 27, subject: '生物', title: '分子设计水稻育种：粮食安全的科技保障', duration: '8min',
+        bvid: 'BV1WWQ6BDEoS',
+        prethink: ['分子育种如何提高水稻产量？','粮食安全为何是国家战略？','基因工程育种与传统育种有什么区别？','分子标记辅助选择的原理是什么？','中国在水稻育种领域有哪些世界级成就？'],
+        points: [
+          { sub: '生物', items: ['基因工程育种原理','分子标记辅助选择','农业生物技术的应用'] },
+          { sub: '化学', items: ['DNA分子的化学结构'] },
+          { sub: '地理', items: ['中国粮食主产区分布'] },
+          { sub: '政治', items: ['粮食安全战略','农业科技政策'] }
+        ],
+        gaokao: '参见2024年生物全国卷（基因工程育种）'
+      },
+      { id: 28, subject: '物理', title: '汽车安全问题：物理原理如何保护生命', duration: '10min',
+        bvid: 'BV1WWQ6BSE1e',
+        prethink: ['安全带如何利用物理原理保护乘客？','溃缩式车身如何减少碰撞伤害？','气囊的触发条件和工作时序是什么？','ABS刹车系统的物理原理是什么？','电动汽车的高压电池在碰撞中有哪些额外风险？'],
+        points: [
+          { sub: '物理', items: ['碰撞中的动量定理','安全气囊工作原理','缓冲吸能结构','动能定理在碰撞中的应用'] },
+          { sub: '化学', items: ['安全气囊中叠氮化钠的反应：NaN₃→Na+N₂'] },
+          { sub: '数学', items: ['动量计算','冲量与时间的关系'] }
+        ],
+        gaokao: '参见2023年物理全国卷（动量定理）；2024年新课标卷（力学综合）'
+      },
+      { id: 29, subject: '英语', title: 'CNN10：盲人体育·打破偏见的勇气', duration: '10min',
+        bvid: 'BV1yWQ6BSEJP',
+        prethink: ['残障运动员在参与体育运动中面临哪些特殊挑战？','体育运动如何帮助残障人士融入社会？','社会如何为残障人士创造更公平的环境？','这个主题的英语报道有哪些常用表达？','残奥会的历史与意义是什么？'],
+        points: [
+          { sub: '英语', items: ['英语听力：社会热点类题型','残障相关英语词汇','新闻英语的语言特点'] },
+          { sub: '生物', items: ['感官代偿与神经可塑性'] },
+          { sub: '政治', items: ['社会公平与残障权益保障'] }
+        ],
+        gaokao: '参见2024年英语全国卷（社会主题阅读）'
+      },
+      { id: 30, subject: '英语', title: 'CNN10：代际连接·科技温暖人心', duration: '10min',
+        bvid: 'BV1CWQ6BSEm7',
+        prethink: ['科技如何帮助老年人融入数字社会？','代际之间有哪些沟通障碍？','老龄化社会对国家政策有哪些挑战？','这个话题的英语词汇和表达有哪些？','中国的养老政策有哪些最新进展？'],
+        points: [
+          { sub: '英语', items: ['英语听力：人文关怀类题型','老龄化相关英语词汇'] },
+          { sub: '生物', items: ['衰老的生理机制','老年人健康维护'] },
+          { sub: '政治', items: ['养老政策与社会保障制度'] },
+          { sub: '地理', items: ['人口老龄化的地区差异'] }
+        ],
+        gaokao: '参见2024年英语全国卷（社会类阅读）'
+      },
+      { id: 31, subject: '英语', title: 'CNN10：AI与植物·学生创新实验', duration: '10min',
+        bvid: 'BV1WWQ6BSEtH',
+        prethink: ['AI如何帮助植物学研究？','青少年如何开展科学创新？','这个报道涉及哪些科学方法？','如何理解英语新闻中的科学术语？','AI在农业领域还有哪些应用？'],
+        points: [
+          { sub: '英语', items: ['英语听力：科学实验类题型','AI与科技英语表达'] },
+          { sub: '生物', items: ['植物生长的影响因素','光合作用的探究实验'] },
+          { sub: '数学', items: ['数据分析：实验数据的处理'] }
+        ],
+        gaokao: '参见2024年英语全国卷听力（科技类）'
+      },
+      { id: 32, subject: '语文', title: '人工智能时代的机遇和挑战', duration: '12min',
+        bvid: 'BV1PWQ6BDExM',
+        prethink: ['人工智能带来哪些机遇？又有哪些潜在风险？','我们应该如何看待AI对就业的冲击？','AI时代需要培养哪些新型能力？','如何写一篇关于AI的议论文？','中国在AI治理方面有哪些政策举措？'],
+        points: [
+          { sub: '语文', items: ['议论文写作：AI时代的辩证思维','论据积累：AI机遇与挑战的典型案例','时评文的写作方法'] },
+          { sub: '数学', items: ['AI算法的数学基础'] },
+          { sub: '政治', items: ['科技伦理与AI治理','新质生产力与AI产业'] }
+        ],
+        gaokao: '参见2024年语文全国卷（科技主题作文）'
+      },
+    ]
+  },
+  {
+    icon: '📐', title: '第五批：数学思维与空间认知', theme: '数学如何描述世界？从二维到四维的空间认知如何拓展？',
+    videos: [
+      { id: 33, subject: '数学', title: '自然界中的数学：斐波那契与黄金比例', duration: '15min',
+        bvid: 'BV1WWQ6BSEh1',
+        prethink: ['斐波那契数列是什么？它是如何出现在自然界的？','黄金比例φ=1.618...的数学本质是什么？','螺旋贝壳和向日葵种子排列有何数学规律？','黄金比例与斐波那契数列有什么关系？','数学模型如何帮助我们理解生物生长规律？'],
+        points: [
+          { sub: '数学', items: ['斐波那契数列的递推公式','黄金比例的代数定义','极限概念：Fn/Fn-1的极限','数列通项公式推导'] },
+          { sub: '生物', items: ['植物生长的数学规律','叶序与茎的螺旋排列'] },
+          { sub: '物理', items: ['波动中的黄金比例'] }
+        ],
+        gaokao: '参见2024年数学全国卷（数列）；2023年高考数学（递推数列）'
+      },
+      { id: 34, subject: '数学', title: 'Chaos数学漫步01：二维空间', duration: '15min',
+        bvid: 'BV1yWQ6BSEtK',
+        prethink: ['二维平面的数学特征是什么？','平面坐标系的建立有什么历史背景？','二维图形的变换（旋转、平移、缩放）如何用矩阵表示？','什么是曲线的参数方程？','为什么地图只能近似表示地球表面？'],
+        points: [
+          { sub: '数学', items: ['平面直角坐标系','平面向量的运算','直线与圆的方程','仿射变换基础','参数方程概念'] },
+          { sub: '物理', items: ['平面运动的分析方法'] },
+          { sub: '地理', items: ['地图投影的数学原理'] }
+        ],
+        gaokao: '参见2024年数学全国卷（解析几何）'
+      },
+      { id: 35, subject: '数学', title: 'Chaos数学漫步02：三维空间', duration: '15min',
+        bvid: 'BV1WWQ6BSESp',
+        prethink: ['三维坐标系比二维多了什么？','空间向量如何描述三维位置和方向？','立体几何中的点、线、面关系如何用向量证明？','什么是空间中的旋转？','分子的空间构型如何用三维坐标描述？'],
+        points: [
+          { sub: '数学', items: ['空间直角坐标系','空间向量的运算','点积与叉积的几何意义','空间直线与平面方程'] },
+          { sub: '物理', items: ['三维空间中的运动分析'] },
+          { sub: '化学', items: ['分子的空间构型（VSEPR理论）'] }
+        ],
+        gaokao: '参见2024年数学全国卷（空间向量与立体几何）'
+      },
+      { id: 36, subject: '数学', title: 'Chaos数学漫步03：四维空间（上）', duration: '15min',
+        bvid: 'BV1CWQ6BSEdx',
+        prethink: ['我们如何理解看不见的第四维？','高维空间与我们熟悉的三维有哪些类比关系？','超立方体（四维正方体）有多少顶点、边、面？','爱因斯坦的时空观如何引入第四维？','维度类比思维在数学学习中有何价值？'],
+        points: [
+          { sub: '数学', items: ['维度的数学定义','高维空间的类比推理','超立方体的组合计数'] },
+          { sub: '物理', items: ['时空的四维统一（相对论）'] }
+        ],
+        gaokao: '参见数学竞赛及高考大题的空间思维题型'
+      },
+      { id: 37, subject: '数学', title: 'Chaos数学漫步04：四维空间（下）', duration: '15min',
+        bvid: 'BV1WWQ6BSE4B',
+        prethink: ['四维旋转与三维旋转有什么本质区别？','如何用三维投影来理解四维物体？','四维空间中有哪些特殊的数学现象？','高维几何在现代物理和计算机科学中有何应用？','学习高维空间的思维方式对解题有何帮助？'],
+        points: [
+          { sub: '数学', items: ['高维投影的数学原理','多维空间的坐标变换'] },
+          { sub: '物理', items: ['相对论时空观'] },
+          { sub: '计算机', items: ['多维数据的可视化'] }
+        ],
+        gaokao: '参见数学竞赛空间思维题'
+      },
+      { id: 38, subject: '数学', title: 'Chaos数学漫步05：复数（上）', duration: '15min',
+        bvid: 'BV1sWQ6BDEVX',
+        prethink: ['为什么需要发明虚数？虚数单位i的几何含义是什么？','复数在复平面上如何表示？','复数的模和辐角是什么？','复数加法和乘法在几何上有什么直观解释？','复数有哪些实际应用（交流电、信号处理等）？'],
+        points: [
+          { sub: '数学', items: ['复数的代数形式和几何形式','复数的四则运算','复数的模和辐角','复平面的概念'] },
+          { sub: '物理', items: ['交流电路中的复数表示'] }
+        ],
+        gaokao: '参见2024年数学全国卷（复数运算）'
+      },
+      { id: 39, subject: '数学', title: 'Chaos数学漫步06：复数（下）', duration: '15min',
+        bvid: 'BV1CWQ6BSEZj',
+        prethink: ['欧拉公式e^(iπ)+1=0为什么被称为最美方程？','复数的指数形式是什么？它与三角形式有什么关系？','棣莫弗定理如何简化复数的幂运算？','傅里叶变换与复数有什么关系？','复数如何统一三角函数与指数函数？'],
+        points: [
+          { sub: '数学', items: ['欧拉公式的推导','复数的指数形式','棣莫弗定理','复数开方运算'] },
+          { sub: '物理', items: ['振动与波的复数描述'] }
+        ],
+        gaokao: '参见2024年数学全国卷（复数）'
+      },
+      { id: 40, subject: '数学', title: 'Chaos数学漫步07：分形（上）', duration: '15min',
+        bvid: 'BV1CWQ6BSEZJ',
+        prethink: ['什么是分形？分形与普通几何图形有什么区别？','科赫雪花的面积有限但周长无限，这如何可能？','自然界中哪些现象具有分形结构？','分形维数是如何定义的？','分形与混沌理论有什么关系？'],
+        points: [
+          { sub: '数学', items: ['分形的自相似性定义','科赫雪花曲线的递推构造','分形维数的概念','无穷级数：面积的极限收敛'] },
+          { sub: '生物', items: ['生物体内的分形结构（肺泡、血管）'] },
+          { sub: '地理', items: ['海岸线的分形特征'] }
+        ],
+        gaokao: '参见数学全国卷（数列极限、递推数列）'
+      },
+      { id: 41, subject: '数学', title: 'Chaos数学漫步08：分形（下）', duration: '15min',
+        bvid: 'BV1WWQ6BSEa9',
+        prethink: ['曼德布罗特集合是如何生成的？','朱利亚集合有哪些迷人的数学性质？','混沌系统的本质特征是什么？','分形在工程技术中有哪些应用？','蝴蝶效应的数学含义是什么？'],
+        points: [
+          { sub: '数学', items: ['复数迭代与曼德布罗特集合','混沌系统的定义','非线性动力学基础'] },
+          { sub: '物理', items: ['混沌理论在物理中的应用'] }
+        ],
+        gaokao: '参见数学竞赛（复数迭代）'
+      },
+      { id: 42, subject: '数学', title: 'Chaos数学漫步09：证明（上）', duration: '15min',
+        bvid: 'BV1CWQ6BSEmb',
+        prethink: ['数学证明与物理实验有什么本质区别？','什么是演绎推理？如何构造一个严格的数学证明？','反证法的逻辑原理是什么？','数学归纳法如何证明无穷多的情况？','哪些历史上著名的数学证明改变了数学发展？'],
+        points: [
+          { sub: '数学', items: ['数学证明的基本方法（直接法、反证法、归纳法）','数学归纳法的结构','严格性与公理化方法'] },
+          { sub: '物理', items: ['物理推导与数学证明的区别'] }
+        ],
+        gaokao: '参见数学全国卷（数学归纳法、数列证明）'
+      },
+      { id: 43, subject: '数学', title: 'Chaos数学漫步10：证明（下）', duration: '10min',
+        bvid: 'BV1yWQ6BSEK3',
+        prethink: ['哥德尔不完备定理说明了什么？','数学中是否有永远无法证明的命题？','P=NP问题是什么？为什么它如此重要？','数学的边界在哪里？','了解数学的局限性对学习数学有什么启示？'],
+        points: [
+          { sub: '数学', items: ['哥德尔不完备定理简介','数学的边界与局限性','著名数学难题概览'] }
+        ],
+        gaokao: '参见数学思维拓展题'
+      },
+    ]
+  },
+  {
+    icon: '🏛️', title: '第六批：历史文化与社会发展', theme: '中华文明如何传承发展？中国式现代化有何特色？',
+    videos: [
+      { id: 44, subject: '历史', title: '多元一体的中华文化', duration: '5min',
+        bvid: 'BV1WWQ6BSE2L',
+        prethink: ['中华文化的多元一体格局是如何形成的？','中国各民族文化在历史上是如何交融的？','文化认同与民族认同的关系是什么？','如何理解文化自信的内涵？','中华优秀传统文化如何实现创造性转化？'],
+        points: [
+          { sub: '历史', items: ['中华文明的多元起源','历史上的民族融合与文化交流','文化认同的历史形成'] },
+          { sub: '政治', items: ['文化自信的内涵','中华优秀传统文化与社会主义文化建设'] },
+          { sub: '语文', items: ['中国文学经典中的文化价值观'] }
+        ],
+        gaokao: '参见2024年历史全国卷（中华文化传承）'
+      },
+      { id: 45, subject: '历史', title: '泉州：宋元中国的世界海洋商贸中心', duration: '5min',
+        bvid: 'BV1KnQ6BXE3a',
+        prethink: ['泉州为何成为宋元时期世界最大港口之一？','宋代的海上贸易有哪些主要商品？','泉州港的衰落与明代海禁政策有何关系？','古代海上丝绸之路对中外文化交流有何影响？','泉州申遗成功说明了什么？'],
+        points: [
+          { sub: '历史', items: ['宋元时期的对外贸易','海上丝绸之路的历史路线','市舶司制度与海外贸易管理'] },
+          { sub: '地理', items: ['泉州的地理区位优势','港口城市的历史变迁'] },
+          { sub: '政治', items: ['一带一路的历史渊源'] }
+        ],
+        gaokao: '参见2024年历史全国卷（宋元对外贸易）'
+      },
+      { id: 46, subject: '历史', title: '海南自贸港：全球最大的自由贸易港', duration: '5min',
+        bvid: 'BV1snQ6BQEdA',
+        prethink: ['海南自贸港建设有何战略意义？','自由贸易港与普通港口有何区别？','海南开发开放的历史进程是什么？','海南自贸港政策对哪些行业影响最大？','自贸港如何推动中国扩大对外开放？'],
+        points: [
+          { sub: '历史', items: ['海南开发的历史背景','对外开放政策的演变历程'] },
+          { sub: '政治', items: ['自贸港政策的战略意义','对外开放与经济高质量发展'] },
+          { sub: '地理', items: ['海南的地理优势与区位特点'] }
+        ],
+        gaokao: '参见2024年政治全国卷（对外开放）'
+      },
+      { id: 47, subject: '历史', title: '中国式现代化（中英双语）', duration: '3min',
+        bvid: 'BV1KnQ6BXETP',
+        prethink: ['中国式现代化的五大特征是什么？','中国式现代化与西方现代化有哪些本质区别？','人口规模巨大的现代化面临哪些特殊挑战？','如何用英语准确表达中国式现代化的核心内容？','中国式现代化对其他发展中国家有何借鉴价值？'],
+        points: [
+          { sub: '历史', items: ['现代化的概念与历史进程','中国现代化的探索历程'] },
+          { sub: '政治', items: ['中国式现代化五大特征','人类文明新形态的内涵'] },
+          { sub: '英语', items: ['现代化相关的英语表达'] }
+        ],
+        gaokao: '参见2024年政治全国卷（中国式现代化）'
+      },
+      { id: 48, subject: '语文', title: '2026全国两会：100个重要提案全解析', duration: '15min',
+        bvid: 'BV11nQ6BQEJ6',
+        prethink: ['2026年两会有哪些重要议题？','全国人大和全国政协各有什么职能？','两会提案的形成过程是什么？','如何从两会信息中获取高考时政热点？','两会决策如何影响普通人的生活？'],
+        points: [
+          { sub: '语文', items: ['时政文本的阅读与理解','政论文写作素材积累'] },
+          { sub: '政治', items: ['全国两会制度','人民代表大会制度','政治协商制度'] },
+          { sub: '历史', items: ['两会制度的历史沿革'] }
+        ],
+        gaokao: '参见2026年高考政治时政热点'
+      },
+      { id: 49, subject: '语文', title: '不断推进社会治理创新', duration: '8min',
+        bvid: 'BV11nQ6BQEsF',
+        prethink: ['什么是社会治理？与传统管理有什么区别？','基层社会治理创新有哪些典型案例？','共建共治共享的治理理念如何实现？','数字化如何赋能社会治理？','社会治理创新对居民生活有什么改变？'],
+        points: [
+          { sub: '语文', items: ['论述类文本阅读：社会治理主题','写作素材积累：基层治理案例'] },
+          { sub: '政治', items: ['社会治理现代化的内涵','基层治理体系建设','共建共治共享社会格局'] },
+          { sub: '历史', items: ['中国传统社会治理方式的演变'] }
+        ],
+        gaokao: '参见2024年政治全国卷（社会治理）'
+      },
+      { id: 50, subject: '政治', title: '中国精神：从站起来到强起来', duration: '5min',
+        bvid: 'BV1xnQ6BQEFa',
+        prethink: ['中国精神包含哪些核心要素？','从"站起来"到"富起来"再到"强起来"经历了什么？','每个历史阶段的中国精神有何特点？','如何在日常生活中践行中国精神？','中国精神与个人奋斗有什么关系？'],
+        points: [
+          { sub: '政治', items: ['中国精神的内涵（爱国主义+改革创新精神）','中华民族精神的核心'] },
+          { sub: '历史', items: ['中国近现代史的三个阶段','百年奋斗的历史逻辑'] },
+          { sub: '语文', items: ['精神主题的议论文写作'] }
+        ],
+        gaokao: '参见2024年政治全国卷（中华民族精神）'
+      },
+      { id: 51, subject: '政治', title: '2025感动中国：平凡中的伟大', duration: '5min',
+        bvid: 'BV1NnQ6BXEU1',
+        prethink: ['2025感动中国人物有哪些？他们体现了什么精神？','平凡人如何在平凡岗位上创造伟大？','社会主义核心价值观在感动中国人物身上如何体现？','这些故事可以用于哪些类型的写作？','榜样的力量是如何影响社会的？'],
+        points: [
+          { sub: '政治', items: ['社会主义核心价值观的践行','中国精神的时代内涵'] },
+          { sub: '语文', items: ['人物事迹作文素材积累','叙事文与议论文的写作技巧'] },
+          { sub: '历史', items: ['时代精神与历史进步的关系'] }
+        ],
+        gaokao: '参见2025年语文高考（典型人物作文素材）'
+      },
+    ]
+  },
+  {
+    icon: '🌐', title: '第七批：全球视野与公民素养', theme: '如何培养全球公民意识？青少年如何参与社会改善？',
+    videos: [
+      { id: 52, subject: '政治', title: '励志篇：为梦想奋斗，为幸福打拼', duration: '4min',
+        bvid: 'BV1xnQ6BQEVQ',
+        prethink: ['青年人应该树立怎样的人生目标？','如何在奋斗中实现人生价值？','面对困难时如何保持奋斗的动力？','什么样的幸福是真正有意义的幸福？','如何把个人梦想与国家发展结合起来？'],
+        points: [
+          { sub: '政治', items: ['人生价值的实现方式','奉献精神与个人幸福的统一','社会主义核心价值观'] },
+          { sub: '语文', items: ['励志主题的写作素材','个人成长类记叙文写法'] },
+          { sub: '历史', items: ['奋斗精神的历史传承'] }
+        ],
+        gaokao: '参见2024年语文全国卷（青年奋斗主题作文）'
+      },
+    ]
+  },
+];
+
+// =============================================
+// 状态管理
+// =============================================
+let currentId = null;
+let filterSubj = '全部';
+let filterText = '';
+let showGuide = false;
+let watched = new Set(JSON.parse(localStorage.getItem('wv_watched_v2') || '[]'));
+const ALL_VIDEOS = BATCHES.flatMap(b => b.videos);
+
+// =============================================
+// 渲染侧边栏
+// =============================================
+function renderSidebar() {
+  const list = document.getElementById('sidebarList');
+  let html = '';
+  for (const batch of BATCHES) {
+    const vids = batch.videos.filter(v => {
+      const textMatch = !filterText || v.title.includes(filterText) || v.subject.includes(filterText);
+      const subjMatch = filterSubj === '全部' || v.subject === filterSubj;
+      return textMatch && subjMatch;
+    });
+    if (!vids.length) continue;
+    html += `<div class="batch-header">
+      <div class="batch-header-row">
+        <span class="batch-icon">${batch.icon}</span>
+        <span class="batch-title-text">${batch.title}</span>
+        <span class="batch-meta">${vids.length}个</span>
+      </div>
+    </div>`;
+    for (const v of vids) {
+      const isActive = v.id === currentId;
+      const isWatched = watched.has(v.id);
+      const hasBvid = !!(v.bvid && v.bvid.trim());
+      html += `<div class="video-item ${isActive ? 'active' : ''}" onclick="selectVideo(${v.id})" id="item-${v.id}">
+        <span class="item-num">${String(v.id).padStart(2,'0')}</span>
+        <span class="item-subject-dot dot-${v.subject}"></span>
+        <div class="item-info">
+          <div class="item-title">${v.title}</div>
+          <div class="item-meta">${v.subject} · ${v.duration}</div>
+        </div>
+        ${isWatched ? '<span class="item-status" title="已看">✅</span>' : ''}
+        ${!hasBvid ? '<span class="item-no-video">待上传</span>' : ''}
+      </div>`;
+    }
+  }
+  list.innerHTML = html;
+}
+
+// =============================================
+// 选择视频
+// =============================================
+function selectVideo(id) {
+  currentId = id;
+  const v = ALL_VIDEOS.find(x => x.id === id);
+  if (!v) return;
+
+  // 更新侧边栏
+  renderSidebar();
+  // 滚动到当前项
+  const el = document.getElementById('item-' + id);
+  if (el) el.scrollIntoView({ block: 'nearest' });
+
+  // 隐藏欢迎页
+  document.getElementById('welcomePanel').classList.add('hidden');
+
+  // 处理播放区
+  const placeholder = document.getElementById('playerPlaceholder');
+  const pending = document.getElementById('playerPending');
+  const iframe = document.getElementById('biliFrame');
+  const watchBtn = document.getElementById('biliDirectLink');
+  placeholder.classList.add('hidden');
+
+  const hasBvid = !!(v.bvid && v.bvid.trim());
+  if (hasBvid) {
+    pending.classList.add('hidden');
+    iframe.classList.remove('hidden');
+    // B站嵌入URL格式
+    iframe.src = `https://player.bilibili.com/player.html?bvid=${v.bvid}&page=1&high_quality=1&danmaku=0&autoplay=1`;
+    // 显示「去B站观看」按钮并设置正确链接
+    watchBtn.href = `https://www.bilibili.com/video/${v.bvid}`;
+    watchBtn.classList.remove('hidden');
+  } else {
+    iframe.classList.add('hidden');
+    iframe.src = 'about:blank';
+    watchBtn.classList.add('hidden');
+    pending.classList.remove('hidden');
+    document.getElementById('pendingTitle').textContent = v.title;
+    document.getElementById('pendingDesc').textContent = '该视频的B站链接尚未配置，请上传至B站后填入BV号。你可以点击「考点导学」查看本视频的学习内容。';
+  }
+
+  // 更新信息栏
+  const infobar = document.getElementById('videoInfobar');
+  infobar.classList.remove('hidden');
+  const badge = document.getElementById('infoBadge');
+  badge.textContent = v.subject;
+  badge.className = `video-subject-badge subj-${v.subject}`;
+  document.getElementById('infoTitle').textContent = v.title;
+
+  // 更新已看按钮
+  const btnW = document.getElementById('btnWatched');
+  btnW.textContent = watched.has(id) ? '✓ 已标记' : '○ 标记已看';
+  btnW.className = 'infobar-btn' + (watched.has(id) ? ' active' : '');
+
+  // 更新导学按钮
+  document.getElementById('btnGuide').textContent = showGuide ? '📖 收起导学' : '📖 考点导学';
+
+  // 更新上/下按钮
+  const idx = ALL_VIDEOS.findIndex(x => x.id === id);
+  document.getElementById('btnPrev').disabled = idx <= 0;
+  document.getElementById('btnNext').disabled = idx >= ALL_VIDEOS.length - 1;
+
+  // 渲染导学内容
+  renderGuide(v);
+  // 如果导学面板已展开，保持展开
+  const guidePanel = document.getElementById('guidePanel');
+  if (showGuide) {
+    guidePanel.classList.add('visible');
+  }
+}
+
+// =============================================
+// 渲染考点导学
+// =============================================
+function renderGuide(v) {
+  const panel = document.getElementById('guidePanel');
+  let html = `
+    <div class="guide-section">
+      <div class="guide-section-title">★ 观前思考问题</div>
+      <ul class="prethink-list">
+        ${v.prethink.map(q => `<li>${q}</li>`).join('')}
+      </ul>
+    </div>
+    <div class="guide-section">
+      <div class="guide-section-title">▶ 多学科高考考点</div>
+      <div class="points-grid">
+        ${v.points.map(p => `
+          <div class="point-card">
+            <span class="point-card-sub subj-${p.sub}">${p.sub}</span>
+            <ul class="point-items">
+              ${p.items.map(item => `<li>${item}</li>`).join('')}
+            </ul>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="guide-section">
+      <div class="guide-section-title">🔗 相关真题参考</div>
+      <div class="gaokao-hint">${v.gaokao}</div>
+    </div>
+  `;
+  panel.innerHTML = html;
+}
+
+// =============================================
+// 控件
+// =============================================
+function toggleGuide() {
+  showGuide = !showGuide;
+  const panel = document.getElementById('guidePanel');
+  panel.classList.toggle('visible', showGuide);
+  document.getElementById('btnGuide').textContent = showGuide ? '📖 收起导学' : '📖 考点导学';
+}
+
+function toggleWatched() {
+  if (!currentId) return;
+  if (watched.has(currentId)) {
+    watched.delete(currentId);
+  } else {
+    watched.add(currentId);
+  }
+  localStorage.setItem('wv_watched_v2', JSON.stringify([...watched]));
+  const btnW = document.getElementById('btnWatched');
+  btnW.textContent = watched.has(currentId) ? '✓ 已标记' : '○ 标记已看';
+  btnW.className = 'infobar-btn' + (watched.has(currentId) ? ' active' : '');
+  renderSidebar();
+}
+
+function prevVideo() {
+  if (!currentId) return;
+  const idx = ALL_VIDEOS.findIndex(v => v.id === currentId);
+  if (idx > 0) selectVideo(ALL_VIDEOS[idx - 1].id);
+}
+
+function nextVideo() {
+  if (!currentId) return;
+  const idx = ALL_VIDEOS.findIndex(v => v.id === currentId);
+  if (idx < ALL_VIDEOS.length - 1) selectVideo(ALL_VIDEOS[idx + 1].id);
+}
+
+function setFilter(subj, el) {
+  filterSubj = subj;
+  document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderSidebar();
+}
+
+function doFilter() {
+  filterText = document.getElementById('searchInput').value.trim();
+  renderSidebar();
+}
+
+// 初始化
+renderSidebar();
+</script>
+</body>
+</html>
